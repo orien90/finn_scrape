@@ -21,7 +21,7 @@ if os.path.isfile('job_list.xlsx'):
 
 for job_ad in job_ads:
     for key in keywords:
-        # get finn.no jobads via bs4
+        # get finn.no jobads via BeautifulSoup
         contents = job_ad.find_all(text=re.compile(key), class_="ads__unit__link")
         keys = job_ad.find_all(class_="ads__unit__content__keys")
         jobs = zip(keys, contents)
