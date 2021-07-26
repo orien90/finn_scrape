@@ -14,7 +14,10 @@ hrefs = []
 df_read = []
 
 # opens file (if exists) and get url column into hrefs
-if os.path.isfile('job_list.xlsx'):
+if not os.path.isfile('job_list.xlsx'):
+    df_create = pd.DataFrame(job_list)
+    df_create.to_excel('job_list.xlsx')
+else:
     df_read = pd.read_excel('job_list.xlsx')
     if not df_read.empty:
         hrefs = [x[3] for x in df_read.values.tolist()]  # urls is stored in column 3 in excel file
@@ -34,7 +37,7 @@ for job_ad in job_ads:
                 ad_content.append(job[1].attrs['href'])
                 job_list.append(ad_content)
 
-if not df_read.empty:
+if type(df_read) is not list:
     for old in df_read.values.tolist():
         job_list.append([old[1], old[2], old[3]])
 if job_list:
